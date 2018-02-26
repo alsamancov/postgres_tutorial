@@ -1,8 +1,8 @@
 --
 -- PostgreSQL database dump
 --
-CREATE DATABASE exercises;
-\c exercises
+--CREATE if not EXISTS DATABASE exercises;
+--\c exercises
 CREATE SCHEMA cd;
 
 
