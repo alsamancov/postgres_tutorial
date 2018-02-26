@@ -32,7 +32,7 @@ SET default_with_oids = false;
 -- Name: bookings; Type: TABLE; Schema: cd; Owner: -; Tablespace:
 --
 
-CREATE TABLE bookings (
+CREATE TABLE cd.bookings (
     bookid integer NOT NULL,
     facid integer NOT NULL,
     memid integer NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE bookings (
 -- Name: facilities; Type: TABLE; Schema: cd; Owner: -; Tablespace:
 --
 
-CREATE TABLE facilities (
+CREATE TABLE cd.facilities (
     facid integer NOT NULL,
     name character varying(100) NOT NULL,
     membercost numeric NOT NULL,
@@ -61,7 +61,7 @@ CREATE TABLE facilities (
 -- Name: members; Type: TABLE; Schema: cd; Owner: -; Tablespace:
 --
 
-CREATE TABLE members (
+CREATE TABLE cd.members (
     memid integer NOT NULL,
     surname character varying(200) NOT NULL,
     firstname character varying(200) NOT NULL,
@@ -79,7 +79,7 @@ CREATE TABLE members (
 -- Data for Name: bookings; Type: TABLE DATA; Schema: cd; Owner: -
 --
 
-INSERT INTO bookings (bookid, facid, memid, starttime, slots) VALUES
+INSERT INTO cd.bookings (bookid, facid, memid, starttime, slots) VALUES
 (0, 3, 1, '2012-07-03 11:00:00', 2),
 (1, 4, 1, '2012-07-03 08:00:00', 2),
 (2, 6, 0, '2012-07-03 18:00:00', 2),
@@ -4132,7 +4132,7 @@ INSERT INTO bookings (bookid, facid, memid, starttime, slots) VALUES
 -- Data for Name: facilities; Type: TABLE DATA; Schema: cd; Owner: -
 --
 
-INSERT INTO facilities (facid, name, membercost, guestcost, initialoutlay, monthlymaintenance) VALUES
+INSERT INTO cd.facilities (facid, name, membercost, guestcost, initialoutlay, monthlymaintenance) VALUES
 (0, 'Tennis Court 1', 5, 25, 10000, 200),
 (1, 'Tennis Court 2', 5, 25, 8000, 200),
 (2, 'Badminton Court', 0, 15.5, 4000, 50),
@@ -4150,7 +4150,7 @@ INSERT INTO facilities (facid, name, membercost, guestcost, initialoutlay, month
 -- Data for Name: members; Type: TABLE DATA; Schema: cd; Owner: -
 --
 
-INSERT INTO members (memid, surname, firstname, address, zipcode, telephone, recommendedby, joindate) VALUES
+INSERT INTO cd.members (memid, surname, firstname, address, zipcode, telephone, recommendedby, joindate) VALUES
 (0, 'GUEST', 'GUEST', 'GUEST', 0, '(000) 000-0000', NULL, '2012-07-01 00:00:00'),
 (1, 'Smith', 'Darren', '8 Bloomsbury Close, Boston', 4321, '555-555-5555', NULL, '2012-07-02 12:02:05'),
 (2, 'Smith', 'Tracy', '8 Bloomsbury Close, New York', 4321, '555-555-5555', NULL, '2012-07-02 12:08:23'),
@@ -4189,7 +4189,7 @@ INSERT INTO members (memid, surname, firstname, address, zipcode, telephone, rec
 -- Name: bookings_pk; Type: CONSTRAINT; Schema: cd; Owner: -; Tablespace:
 --
 
-ALTER TABLE ONLY bookings
+ALTER TABLE ONLY cd.bookings
     ADD CONSTRAINT bookings_pk PRIMARY KEY (bookid);
 
 
@@ -4198,7 +4198,7 @@ ALTER TABLE ONLY bookings
 -- Name: facilities_pk; Type: CONSTRAINT; Schema: cd; Owner: -; Tablespace:
 --
 
-ALTER TABLE ONLY facilities
+ALTER TABLE ONLY cd.facilities
     ADD CONSTRAINT facilities_pk PRIMARY KEY (facid);
 
 
@@ -4207,7 +4207,7 @@ ALTER TABLE ONLY facilities
 -- Name: members_pk; Type: CONSTRAINT; Schema: cd; Owner: -; Tablespace:
 --
 
-ALTER TABLE ONLY members
+ALTER TABLE ONLY cd.members
     ADD CONSTRAINT members_pk PRIMARY KEY (memid);
 
 
@@ -4216,8 +4216,8 @@ ALTER TABLE ONLY members
 -- Name: fk_bookings_facid; Type: FK CONSTRAINT; Schema: cd; Owner: -
 --
 
-ALTER TABLE ONLY bookings
-    ADD CONSTRAINT fk_bookings_facid FOREIGN KEY (facid) REFERENCES facilities(facid);
+ALTER TABLE ONLY cd.bookings
+    ADD CONSTRAINT fk_bookings_facid FOREIGN KEY (facid) REFERENCES cd.facilities(facid);
 
 
 --
@@ -4225,8 +4225,8 @@ ALTER TABLE ONLY bookings
 -- Name: fk_bookings_memid; Type: FK CONSTRAINT; Schema: cd; Owner: -
 --
 
-ALTER TABLE ONLY bookings
-    ADD CONSTRAINT fk_bookings_memid FOREIGN KEY (memid) REFERENCES members(memid);
+ALTER TABLE ONLY cd.bookings
+    ADD CONSTRAINT fk_bookings_memid FOREIGN KEY (memid) REFERENCES cd.members(memid);
 
 
 --
@@ -4234,8 +4234,8 @@ ALTER TABLE ONLY bookings
 -- Name: fk_members_recommendedby; Type: FK CONSTRAINT; Schema: cd; Owner: -
 --
 
-ALTER TABLE ONLY members
-    ADD CONSTRAINT fk_members_recommendedby FOREIGN KEY (recommendedby) REFERENCES members(memid) ON DELETE SET NULL;
+ALTER TABLE ONLY cd.members
+    ADD CONSTRAINT fk_members_recommendedby FOREIGN KEY (recommendedby) REFERENCES cd.members(memid) ON DELETE SET NULL;
 
 
 -- Completed on 2013-05-19 16:05:12 BST
