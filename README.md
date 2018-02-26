@@ -1,5 +1,10 @@
 "# Postgresql tutorial" 
 
+#https://www.pgexercises.com/
+
+
+
+
 docker pull postgresqlaas/docker-postgresql-9.6
 
 docker run -d --name postgresql -p 5432:5432 -e POSTGRES_USERNAME=root -e POSTGRES_PASSWORD=postgres -e POSTGRES_DBNAME exercises frodenas/postgresql
@@ -20,3 +25,6 @@ docker images -a
 
 Remove:
 docker rmi id
+
+#http://www.postgresqltutorial.com
+
