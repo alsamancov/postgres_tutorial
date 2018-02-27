@@ -28,3 +28,5 @@ docker rmi id
 
 #http://www.postgresqltutorial.com
 
+docker run --name postgis -e POSTGRES_PASSWORD=dba -e POSTGRES_USER=dba -e POSTGRES_DB=fm -p 55432:5432 -v pgdata:/var/lib/postgresql/data -d mdillon/postgis:9.6-alpine
+docker logs --tail 100 postgis
