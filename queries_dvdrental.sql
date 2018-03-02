@@ -259,5 +259,5 @@ SELECT staff_id, COUNT(payment_id) FROM payment GROUP BY staff_id;
 --https://www.youtube.com/watch?v=ZgS6dPamOKQ&index=9&list=PLi3gxGWPyGGQOBAp-n-zWaj6QZeFtXLHh
 
 --https://www.youtube.com/watch?v=yT6ueNCqWcs&list=PLk1kxccoEnNEtwGZW-3KAcAlhI_Guwh8x&index=2
-
+SELECT SUM(amount) FROM payment GROUP BY staff_id;
 
