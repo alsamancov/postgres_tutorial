@@ -102,6 +102,10 @@ SELECT first_name || ' ' || last_name FROM customer ORDER BY first_name || ' ' |
 
 SELECT first_name || ' ' || last_name AS full_name FROM customer ORDER BY full_name;
 
+-------------------------------------------------------------
+
+--Section 4. Joining multiple tables
+
 --Introduction to PostgreSQL INNER JOIN clause
 
 SELECT
@@ -158,4 +162,102 @@ INNER JOIN payment ON payment.customer_id = customer.customer_id
 INNER JOIN staff ON payment.staff_id = staff.staff_id;
 
 --PostgreSQL FULL OUTER JOIN
+
+CREATE TABLE IF NOT EXISTS departments(
+  department_id SERIAL PRIMARY KEY,
+  department_name VARCHAR(255) NOT NULL
+);
+
+
+CREATE TABLE IF NOT EXISTS employees(
+  employee_id SERIAL PRIMARY KEY,
+  employee_name VARCHAR(255),
+  department_id INTEGER
+);
+
+INSERT INTO departments(department_name) VALUES ('Sales'), ('Marketing'), ('HR'), ('IT'), ('Production');
+
+INSERT INTO employees (employee_name, department_id) VALUES ('Bette Nicholson', 1), ('Christian Gable', 1), ('Joe Swank', 2), ('Fred Costner', 3), ('Sandra Kilmer', 4), ('Julia Mcqueen', NULL );
+
+SELECT employee_name, department_name FROM employees e FULL OUTER JOIN departments d ON d.department_id = e.department_id;
+
+SELECT employee_name, department_name FROM employees e FULL OUTER JOIN departments d ON d.department_id = e.department_id WHERE employee_name ISNULL ;
+
+SELECT employee_name, department_name FROM employees e FULL OUTER JOIN departments d ON d.department_id = e.department_id WHERE department_name ISNULL ;
+
+--PostgreSQL LEFT JOIN
+
+--To join the A table to the B table, you need to:
+
+--Specify the columns from which you want to select data in the SELECT clause.
+--Specify the left table i.e., A table where you want to get all rows, in the FROM clause.
+--Specify the right table i.e., B table in the LEFT JOIN clause. In addition, specify the condition for joining two tables.
+
+SELECT film.film_id, film.title, inventory_id FROM film LEFT JOIN inventory ON inventory.film_id = film.film_id;
+
+SELECT film.film_id, film.title, inventory_id FROM film LEFT JOIN inventory ON inventory.film_id = film.film_id WHERE inventory.film_id ISNULL ;
+
+--PostgreSQL NATURAL JOIN Explained By Examples
+
+CREATE TABLE categories (
+  category_id SERIAL PRIMARY KEY,
+  category_name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE products (
+  product_id SERIAL PRIMARY KEY,
+  product_name VARCHAR(255) NOT NULL,
+  category_id INT NOT NULL,
+  FOREIGN KEY (category_id) REFERENCES categories(category_id)
+);
+
+INSERT INTO categories (category_name) VALUES ('Smart Phone'), ('Laptop'), ('Tablet');
+
+INSERT INTO products (product_name, category_id) VALUES ('iPhone', 1), ('Samsung Galaxy', 1), ('Hp Elite', 2), ('Lenovo Thinkpad', 2), ('iPad', 3), ('Kindle Fire', 3);
+
+SELECT * FROM products NATURAL JOIN categories;
+
+SELECT * FROM products INNER JOIN categories USING (category_id);
+
+SELECT * FROM city NATURAL JOIN country;
+
+--PostgreSQL Cross Join By Example
+
+CREATE TABLE T1 (label CHAR(1) PRIMARY KEY);
+
+CREATE TABLE T2 (score INT PRIMARY KEY);
+
+INSERT INTO T1(label) VALUES ('A'), ('B');
+
+CREATE TABLE T1 (label CHAR(1) PRIMARY KEY);
+
+CREATE TABLE T2 (score INT PRIMARY KEY);
+
+INSERT INTO T1 (label)
+VALUES
+  ('A'),
+  ('B');
+
+INSERT INTO T2 (score) VALUES (1), (2), (3);
+
+SELECT * FROM t1 CROSS JOIN t2;
+
+----------------------------------
+
+--Section 5. Grouping data
+
+SELECT * FROM payment;
+
+SELECT customer_id FROM payment GROUP BY customer_id;
+
+SELECT customer_id, SUM(amount) FROM payment GROUP BY customer_id;
+
+SELECT customer_id, SUM(amount) FROM payment GROUP BY customer_id ORDER BY SUM(amount) DESC;
+
+SELECT staff_id, COUNT(payment_id) FROM payment GROUP BY staff_id;
+
+--https://www.youtube.com/watch?v=ZgS6dPamOKQ&index=9&list=PLi3gxGWPyGGQOBAp-n-zWaj6QZeFtXLHh
+
+--https://www.youtube.com/watch?v=yT6ueNCqWcs&list=PLk1kxccoEnNEtwGZW-3KAcAlhI_Guwh8x&index=2
+
 
