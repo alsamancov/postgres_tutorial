@@ -1,0 +1,15 @@
+1.Install postgresql
+refer: http://w3resource.com/PostgreSQL/install-postgresql-on-linux-and-windows.php
+2.In postgresql prompt
+create database "dbname"
+3.\q
+4.psql -h ip -U postgres dbname < pgex_backup.pgsql
+sqlex_backup.pgsql must be with proper path. For local machine ip is 127.0.0.1
+5.psql -h ip -U postgres dbname
+6.CREATE ROLE username WITH LOGIN ENCRYPTED PASSWORD 'password';
+7.GRANT CONNECT ON DATABASE dbname TO username;
+8.GRANT SELECT ON ALL TABLES IN SCHEMA public TO username;
+9.\q
+10.psql -h ip -U postgres dbname
+supply password for username
+11.Start executing SQL commands now
