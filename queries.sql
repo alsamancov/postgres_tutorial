@@ -59,3 +59,69 @@ where
 
 #You might have noticed that this is our first query that combines a WHERE clause with selecting specific columns. You can see in the image below the effect of this: the intersection of the selected columns and the selected rows gives us the data to return. This may not seem too interesting now, but as we add in more complex operations like joins later, you'll see the simple elegance of this behaviour.
 
+#Introduction to PostgreSQL UNION operator
+
+#Both queries must return the same number of columns.
+#The corresponding columns in the queries must have compatible data types.
+
+-- CREATE TABLE sales2007q1(NAME VARCHAR , AMOUNT FLOAT);
+# CREATE TABLE sales2007q2 (NAME VARCHAR, AMOUNT FLOAT);
+
+INSERT INTO sales2007q1(name, amount) VALUES ('Mike', 150000.25), ('Jon', 132000.75), ('Mary', 100000);
+
+INSERT INTO sales2007q2 (name, amount) VALUES ('Mike', 120000.25), ('Jon', 142000.75), ('Mary', 100000);
+
+SELECT * FROM sales2007q1 UNION SELECT * FROM sales2007q2;
+
+SELECT * FROM sales2007q1 UNION ALL SELECT * FROM sales2007q2;
+
+SELECT * FROM sales2007q1 UNION ALL SELECT * FROM sales2007q2 ORDER BY name ASC, amount DESC;
+
+#Introduction to PostgreSQL INTERSECT operator
+
+CREATE TABLE employees (
+  employee_id SERIAL PRIMARY KEY,
+  employee_name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE keys (
+  employee_id INT PRIMARY KEY,
+  effective_date DATE NOT NULL,
+  FOREIGN KEY (employee_id) REFERENCES employees (employee_id)
+);
+
+CREATE TABLE hipos(
+  employee_id INT PRIMARY KEY,
+  effective_date DATE NOT NULL,
+  FOREIGN KEY (employee_id) REFERENCES employees (employee_id)
+);
+
+INSERT INTO employees(employee_name)
+VALUES
+  ('Joyce Edwards'),
+  ('Diane Collins'),
+  ('Alice Stewart'),
+  ('Julie Sanchez'),
+  ('Heather Morris'),
+  ('Teresa Rogers'),
+  ('Doris Reed'),
+  ('Gloria Cook'),
+  ('Evelyn Morgan'),
+  ('Jean Bell');
+
+INSERT INTO keys VALUES
+  (1, '2000-02-01'),
+  (2, '2001-06-01'),
+  (5, '2002-01-01'),
+  (7, '2005-06-01');
+
+INSERT INTO hipos VALUES
+  (9, '2000-01-01'),
+  (2, '2002-06-01'),
+  (5, '2006-06-01'),
+  (10, '2005-06-01');
+
+SELECT employee_id FROM keys;
+
+SELECT employee_id FROM hipos;
+
